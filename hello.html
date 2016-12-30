@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>hello</title>
+	<script type="text/javascript" src='react.js'></script>
+	<script type="text/javascript" src='react-dom.js'></script>
+	<script type="text/javascript" src="browser.min.js"></script>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/babel" src="page.js"></script>
+</head>
+<body>
+	<div id="example"></div>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- <script type="text/babel">
+		var RepoList = React.createClass({
+		  getInitialState: function() {
+		    return { loading: true, error: null, data: null};
+		  },
+	
+		  componentDidMount() {
+		    this.props.promise.then(
+		      value => this.setState({loading: false, data: value}),
+		      error => this.setState({loading: false, error: error}));
+		  },
+	
+		  render: function() {
+		    if (this.state.loading) {
+		      return <span>Loading...</span>;
+		    }
+		    else if (this.state.error !== null) {
+		      return <span>Error: {this.state.error.message}</span>;
+		    }
+		    else {
+		      var repos = this.state.data.items;
+		      var repoList = repos.map(function (repo) {
+		        return (
+		          <li>
+		            <a href={repo.html_url}>{repo.name}</a> ({repo.stargazers_count} stars) <br/> {repo.description}
+		          </li>
+		        );
+		      });
+		      return (
+		        <main>
+		          <h1>Most Popular JavaScript Projects in Github</h1>
+		          <ol>{repoList}</ol>
+		        </main>
+		      );
+		    }
+		  }
+		});
+	
+		ReactDOM.render(
+			<RepoList
+			    promise={$.getJSON('https://api.github.com/search/repositories?q=javascript&sort=stars')}
+			/>,
+			document.getElementById('example')
+		);
+	</script> -->
+	<!-- <script type="text/babel">	
+		var Rank = React.createClass({
+			getInitialState:function(){
+				return {
+					willmount:"",
+					didmount:"",
+					willupdate:"",
+					didupdate:"",
+					willunmount:"",
+				}
+			},
+	
+			componentWillMount:function(){
+				this.setState({
+					willmount:"1"
+				});
+			},
+			
+			componentDidMount:function(){
+				 this.setState({
+				 	didmount:"1"
+				 });
+			},
+	
+			render:function(){
+				return <div>
+					<h2>加载状态</h2>
+					<p>{this.state.willmount}</p>
+					<p>{this.state.didmount}</p>
+					<p>{this.state.willupdate}</p>
+					<p>{this.state.didupdate}</p>
+					<p>{this.state.willunmount}</p>
+				</div>
+			}
+		});
+	
+		ReactDOM.render(
+			<Rank />,
+			document.getElementById('example')
+		);
+	</script> -->
+
+	<!-- <script type="text/babel">
+		var Input = React.createClass({
+			getInitialState:function(){
+				return {value:"hello"}
+			},
+			handle:function(event){
+				this.setState({value:event.target.value});		
+			},
+			render:function(){
+				var value=this.state.value;
+				return <div>
+					<input type="text" name="test" value={value} onChange={this.handle}/>
+					<p>{value}</p>
+				</div>
+			}
+		});
+	
+		ReactDOM.render(
+			<Input />,
+			document.getElementById('example')
+		);
+	</script> -->
+
+	<!-- <script type="text/babel">
+		var ClickBox = React.createClass({
+			getInitialState:function(){
+				return {like:false}
+			},
+			handleClick:function(event){
+				this.setState({like:!this.state.like});
+			},
+			render:function(){
+				var text=this.state.like?"like":"no like";
+				return <h3 onClick={this.handleClick}>{text}</h3>
+			}
+		});
+	
+		ReactDOM.render(
+			<ClickBox />,
+			document.getElementById('example')
+		);
+	</script> -->
+
+	<!-- <script type="text/babel">
+		var RankList = React.createClass({
+			render:function(){
+				return (
+					<div>
+						<RankTitle/>
+						<RankBody data={this.props.data}></RankBody>
+					</div>
+				)
+			}
+		});
+	
+		var RankTitle = React.createClass({
+			handleClick1:function(){
+				console.log(this);
+			},
+			render:function(){
+				return <h3 onClick={this.handleClick1}>react教程</h3>
+			}
+		});
+	
+		var RankBody = React.createClass({
+			getInitialState: function(){
+				return {data:"未点击"}
+			},
+	
+			handleClick:function(event){
+				this.setState({data:"已点击"});
+			},
+	
+			render:function(){
+				let self=this;
+				return <div>
+					<ul>
+						{
+							JSON.parse(this.props.data).map(function(data){
+								return <li key={data} onClick={self.handleClick}>{data}  {self.state.data}</li>
+							})
+						}
+					</ul>
+				</div>
+			}
+		});
+	
+		ReactDOM.render(
+			<RankList data="[1,2,3]"></RankList>,
+			document.getElementById('example')
+		);
+	</script>  -->
+
+	<!-- <script type="text/babel">
+		var AllTitle = React.createClass({
+			render:function(){
+				return (
+					<div>
+						<TitileName name={this.props.name}/>
+						<TitileLink link={this.props.link}/>
+					</div>
+				);
+			}
+		});
+		var TitileName = React.createClass({
+			render:function(){
+				return <h1>{this.props.name}</h1>
+			}
+		});
+		var TitileLink = React.createClass({
+			render:function(){
+				return <a href={this.props.link} target='_blank'>{this.props.link}</a>
+			}
+		});
+		ReactDOM.render(
+			<AllTitle name='这是一个标题' link='http://www.baidu.com'/>,
+			document.getElementById('example')
+		);
+	</script> -->
+
+</body>
+</html>

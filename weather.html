@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>天气查询</title>
+	<script type="text/javascript" src='react.js'></script>
+	<script type="text/javascript" src='react-dom.js'></script>
+	<script type="text/javascript" src="browser.min.js"></script>
+	<script type="text/javascript" src="jquery.min.js"></script>
+</head>
+<body>
+	<div id="test"></div>
+
+	<script type="text/babel">
+
+		var Input = React.createClass({			
+			render:function(){
+				return <form name="input" onSubmit={this.props.putInput}>
+					<input type="text" name="weatherinputr" />
+					<input type="submit" name="wsub" value="查询" />
+				</form>
+			}
+		});
+		
+		var WeatherBox = React.createClass({
+			getInitialState:function(){
+				return {data:[]}
+			},
+			componentWillReceiveProps:function(nextProps){
+				var itemDate=[];
+				nextProps.weather.map(function(data){		
+					let a = [];			
+					for(let key in data){
+						a.push(data[key])
+					}
+					itemDate.push(a)
+				});
+				//this.setState({data:itemDate});
+			},
+			render:function(){
+				var html='';
+				//console.log(this.props.error);
+				switch(this.props.error){
+					case -1:
+						html='暂无该城市信息';
+						break;
+					case 0:
+						html='请输入城市查询';
+						break;
+					case 1:
+						html=<div>
+								<h1 class="cityName">{this.props.city}</h1>
+								<small class="pm25">{(this.props.pm25!='')?`雾霾指数：${this.props.pm25}` : ''}</small>
+								{
+									this.props.weather.map(function(data,i){
+										return <div key={i}>
+											<ul>
+												<li>时间:{this.props.weather[i].date}</li>
+												<li>天气:{this.props.weather[i].weather}</li>
+												<li>温度:{this.props.weather[i].temp}</li>
+												<li>风:{this.props.weather[i].wind}</li>
+											</ul>
+										</div>
+									}.bind(this))
+								}
+							</div>
+						break;
+				}
+				return <div class="weatherBox">{html}</div>
+			}
+			
+		});
+
+		var Weather=React.createClass({
+			getInitialState:function(){
+				return {
+					city:"",
+					pm25:"",
+					weather:[],
+					data:"",
+					error:0
+				}
+			},
+			toAjax:function(e){
+				e.preventDefault();
+				let city = $(e.target).children('input[name=weatherinputr]').val();		
+				$(e.target).children('input[name=weatherinputr]').val('');		
+				var getWeather=this.getData('http://api.asilu.com/weather',city,this.getToFunc);
+			},
+			componentDidMount:function(){
+				console.log(1)
+				console.log(this.refs.test);
+			},
+			getToFunc:function(data){
+				//console.log(data);
+				if(data.t){
+					this.setState({
+						city:data.city,
+						pm25:data.pm25,
+						weather:data.weather,
+						data:data.date,
+						error:1
+					});
+				}else{
+					this.setState({
+						error:-1
+					});
+				}
+				
+			},
+			getData:function(url,city,callback){	
+				$.ajax({
+					url:url,
+					type:"get",
+					data:{
+						city:city
+					},
+					dataType:"jsonp",
+					success:function(data){
+						callback(data);
+					}					
+				});
+			},
+			render:function(){
+				{/*console.log(this.state.error)*/}
+				return <div>
+					<Input putInput={this.toAjax} />
+					<WeatherBox weather={this.state.weather} city={this.state.city} pm25={this.state.pm25} date={this.state.date} error={this.state.error} ref='test' />
+				</div>
+			}
+		});
+
+
+		ReactDOM.render(
+			<Weather />,
+			document.getElementById('test')
+		);
+	</script>
+</body>
+</html>
