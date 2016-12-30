@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="react.js"></script>
+	<script type="text/javascript" src="react-dom.js"></script>
+	<script type="text/javascript" src="browser.min.js"></script>
+</head>
+<body>
+	<div id="example"></div>
+	<!-- <script type="text/babel" src="test.js"></script> -->
+	<script type="text/babel">
+		//var nav=["home","nav1","nav2","nav3","nav4"];
+		var MyNav=React.createClass({
+			propTypes:function(){
+				name:React.PropType.string.isRequired
+			},
+			render:function(){
+				return <div><ul>
+					{
+						React.Children.map(this.props.children,function(name){
+						return <li>{name}</li>
+						})
+					}
+					<li>{this.props.name}</li>
+				</ul></div>;
+			}
+		});
+		ReactDOM.render(
+			<MyNav name="12">
+				<span>home</span>
+				<span>nav1</span>
+				<span>nav2</span>
+				<span>nav3</span>
+				<span>nav4</span>
+			</MyNav>,
+			document.getElementById('example')
+		);
+	</script>
+</body>
+</html>
